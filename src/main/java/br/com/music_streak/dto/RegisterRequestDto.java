@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class RegisterRequestDto {
-    
     @NotBlank(message = "Email is necessary")
     private String email;
     

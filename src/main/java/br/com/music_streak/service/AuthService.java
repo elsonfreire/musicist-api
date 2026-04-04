@@ -1,7 +1,5 @@
 package br.com.music_streak.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,6 +8,7 @@ import br.com.music_streak.dto.LoginRequestDto;
 import br.com.music_streak.dto.LoginResponseDto;
 import br.com.music_streak.dto.RegisterRequestDto;
 import br.com.music_streak.entity.User;
+import br.com.music_streak.infra.security.TokenService;
 import br.com.music_streak.repository.UserRepository;
 
 @Service
@@ -19,6 +18,9 @@ public class AuthService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private TokenService tokenService;
     
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
         User user = userRepository.findByEmail(loginRequestDto.getEmail())
@@ -28,9 +30,10 @@ public class AuthService {
             throw new RuntimeException("Wrong password");
         }
 
+        var token = tokenService.generateToken(user);
+
         LoginResponseDto loginResponseDto = new LoginResponseDto();
-        loginResponseDto.setEmail(user.getEmail());
-        loginResponseDto.setUsername(user.getUsername());
+        loginResponseDto.setToken(token);
 
         return loginResponseDto;
     }
