@@ -1,4 +1,4 @@
-package br.com.music_streak.entity;
+package br.com.music_streak.model;
 
 
 import jakarta.persistence.Column;

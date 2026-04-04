@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.music_streak.dto.LoginRequestDto;
 import br.com.music_streak.dto.LoginResponseDto;
 import br.com.music_streak.dto.RegisterRequestDto;
-import br.com.music_streak.entity.User;
+import br.com.music_streak.dto.RegisterResponseDto;
+import br.com.music_streak.model.User;
 import br.com.music_streak.service.AuthService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,14 +28,8 @@ public class AuthController {
     }
     
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody RegisterRequestDto registerRequestDto) {
-        User user = authService.register(registerRequestDto);
-        
-        if(user == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.status(201).body(user);
+    public ResponseEntity<RegisterResponseDto> register(@RequestBody RegisterRequestDto registerRequestDto) {
+        return ResponseEntity.status(201).body(authService.register(registerRequestDto));
     }
     
 }

@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 import br.com.music_streak.dto.LoginRequestDto;
 import br.com.music_streak.dto.LoginResponseDto;
 import br.com.music_streak.dto.RegisterRequestDto;
-import br.com.music_streak.entity.User;
+import br.com.music_streak.dto.RegisterResponseDto;
 import br.com.music_streak.infra.security.TokenService;
+import br.com.music_streak.model.User;
 import br.com.music_streak.repository.UserRepository;
 
 @Service
@@ -23,26 +24,28 @@ public class AuthService {
     private TokenService tokenService;
     
     public LoginResponseDto login(LoginRequestDto loginRequestDto) {
-        User user = userRepository.findByEmail(loginRequestDto.getEmail())
+        User user = userRepository.findByEmail(loginRequestDto.email())
             .orElseThrow(() -> new RuntimeException("User not found"));
         
-        if(!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPasswordHash())) {
+        if(!passwordEncoder.matches(loginRequestDto.password(), user.getPasswordHash())) {
             throw new RuntimeException("Wrong password");
         }
 
         var token = tokenService.generateToken(user);
 
-        LoginResponseDto loginResponseDto = new LoginResponseDto();
-        loginResponseDto.setToken(token);
-
-        return loginResponseDto;
+        return new LoginResponseDto(token);
     }
 
-    public User register(RegisterRequestDto registerRequestDto) {
-        String encryptedPassword = passwordEncoder.encode(registerRequestDto.getPassword());
+    public RegisterResponseDto register(RegisterRequestDto registerRequestDto) {
+        String encryptedPassword = passwordEncoder.encode(registerRequestDto.password());
         
-        User newUser = new User(null, registerRequestDto.getEmail(), registerRequestDto.getUsername(), encryptedPassword);
-        
-        return userRepository.save(newUser);
+        if(userRepository.findByEmail(registerRequestDto.email()).isPresent()) {
+            throw new RuntimeException("User already exists");
+        }
+
+        User newUser = new User(null, registerRequestDto.email(), registerRequestDto.username(), encryptedPassword);
+        User user = userRepository.save(newUser);
+
+        return new RegisterResponseDto(user.getEmail(), user.getUsername());
     }
 }
