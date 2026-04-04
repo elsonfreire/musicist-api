@@ -23,16 +23,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
-        return ResponseEntity.ok(authService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword()));
+        return ResponseEntity.ok(authService.login(loginRequestDto));
     }
     
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody RegisterRequestDto registerRequestDto) {
-        User user = authService.register(
-            registerRequestDto.getEmail(), 
-            registerRequestDto.getUsername(), 
-            registerRequestDto.getPassword()
-        );
+        User user = authService.register(registerRequestDto);
         
         if(user == null) {
             return ResponseEntity.notFound().build();

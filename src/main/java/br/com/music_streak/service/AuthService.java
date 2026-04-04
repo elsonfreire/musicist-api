@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.music_streak.dto.LoginRequestDto;
 import br.com.music_streak.dto.LoginResponseDto;
+import br.com.music_streak.dto.RegisterRequestDto;
 import br.com.music_streak.entity.User;
 import br.com.music_streak.repository.UserRepository;
 
@@ -18,11 +20,11 @@ public class AuthService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     
-    public LoginResponseDto login(String email, String password) {
-        User user = userRepository.findByEmail(email)
+    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
+        User user = userRepository.findByEmail(loginRequestDto.getEmail())
             .orElseThrow(() -> new RuntimeException("User not found"));
         
-        if(!passwordEncoder.matches(password, user.getPasswordHash())) {
+        if(!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPasswordHash())) {
             throw new RuntimeException("Wrong password");
         }
 
@@ -33,10 +35,10 @@ public class AuthService {
         return loginResponseDto;
     }
 
-    public User register(String email, String username, String password) {
-        String encryptedPassword = passwordEncoder.encode(password);
+    public User register(RegisterRequestDto registerRequestDto) {
+        String encryptedPassword = passwordEncoder.encode(registerRequestDto.getPassword());
         
-        User newUser = new User(null, email, username, encryptedPassword);
+        User newUser = new User(null, registerRequestDto.getEmail(), registerRequestDto.getUsername(), encryptedPassword);
         
         return userRepository.save(newUser);
     }
