@@ -13,9 +13,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-            .csrf(csrf -> csrf.disable()) // Required for POST/PUT requests
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll() // Disables "Unauthorized" for all paths
+                .requestMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated()
             )
             .build();
     }
