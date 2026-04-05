@@ -2,13 +2,11 @@ package br.com.music_streak.controller;
 
 import java.util.List;
 
+import br.com.music_streak.dto.user.UpdateUserRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.music_streak.model.User;
 import br.com.music_streak.service.UserService;
@@ -33,5 +31,17 @@ public class UserController {
         }
 
         return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody UpdateUserRequest userDetails) {
+        User user = userService.findById(id);
+
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User updatedUser = userService.update(id, userDetails);
+        return ResponseEntity.ok(updatedUser);
     }
 }
