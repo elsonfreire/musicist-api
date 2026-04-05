@@ -19,7 +19,3 @@ api:
   security:
     token:
       secret: ${JWT_SECRET:musicist-secret-key}
-
-  # flyway:
-  #   enabled: true
-  #   locations: classpath:db/migration

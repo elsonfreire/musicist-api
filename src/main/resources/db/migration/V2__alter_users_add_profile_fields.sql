@@ -1,5 +1,0 @@
-ALTER TABLE users
-    ADD COLUMN instrument VARCHAR(100),
-    ADD COLUMN level VARCHAR(20),
-    ADD COLUMN bio TEXT,
-    ADD COLUMN created_at TIMESTAMP NOT NULL;
