@@ -43,7 +43,7 @@ public class AuthService {
             throw new RuntimeException("User already exists");
         }
 
-        User newUser = new User(null, registerRequestDto.email(), registerRequestDto.username(), encryptedPassword);
+        User newUser = new User(registerRequestDto.email(), registerRequestDto.username(), encryptedPassword);
         User user = userRepository.save(newUser);
 
         return new RegisterResponseDto(user.getEmail(), user.getUsername());
