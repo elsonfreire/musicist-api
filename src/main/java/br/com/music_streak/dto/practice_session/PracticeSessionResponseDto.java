@@ -4,8 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record PracticeSessionResponseDto(
-    Long id,
-    Long userId,
     LocalDate date,
     Integer durationMinutes,
     String notes,

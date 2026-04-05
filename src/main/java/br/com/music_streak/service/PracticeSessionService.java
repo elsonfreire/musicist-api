@@ -22,8 +22,6 @@ public class PracticeSessionService {
         return practiceSessionRepository.findByUserId(userId)
                 .stream()
                 .map(session -> new PracticeSessionResponseDto(
-                        session.getId(),
-                        session.getUser().getId(),
                         session.getDate(),
                         session.getDurationMinutes(),
                         session.getNotes(),
@@ -38,8 +36,6 @@ public class PracticeSessionService {
         PracticeSession savedSession = practiceSessionRepository.save(practiceSession);
 
         return new PracticeSessionResponseDto(
-                savedSession.getId(),
-                savedSession.getUser().getId(),
                 savedSession.getDate(),
                 savedSession.getDurationMinutes(),
                 savedSession.getNotes(),
