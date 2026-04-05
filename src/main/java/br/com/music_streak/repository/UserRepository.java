@@ -1,6 +1,7 @@
 package br.com.music_streak.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import br.com.music_streak.entity.User;
+
+import br.com.music_streak.model.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {}

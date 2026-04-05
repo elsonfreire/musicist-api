@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.music_streak.entity.User;
+import br.com.music_streak.model.User;
 import br.com.music_streak.repository.UserRepository;
 
 @Service
