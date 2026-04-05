@@ -20,9 +20,6 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> user = userRepository.findById(id);
-
-        // TODO: Implement DTO to hide passwordHash on return
-
         if(user.isEmpty()) {
             return null;
         }

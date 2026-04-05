@@ -39,4 +39,10 @@ public class PracticeSession {
         this.createdAt = LocalDateTime.now();
     }
 
+    public PracticeSession(Integer durationMinutes, String notes, LocalDate date, User user) {
+        this.durationMinutes = durationMinutes;
+        this.notes = notes;
+        this.date = date;
+        this.user = user;
+    }
 }

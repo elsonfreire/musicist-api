@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.music_streak.dto.LoginRequestDto;
-import br.com.music_streak.dto.LoginResponseDto;
-import br.com.music_streak.dto.RegisterRequestDto;
-import br.com.music_streak.dto.RegisterResponseDto;
+import br.com.music_streak.dto.auth.LoginRequestDto;
+import br.com.music_streak.dto.auth.LoginResponseDto;
+import br.com.music_streak.dto.auth.RegisterRequestDto;
+import br.com.music_streak.dto.auth.RegisterResponseDto;
 import br.com.music_streak.infra.security.TokenService;
 import br.com.music_streak.model.User;
 import br.com.music_streak.repository.UserRepository;

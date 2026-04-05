@@ -9,6 +9,5 @@ import br.com.music_streak.model.PracticeSession;
 
 @Repository
 public interface PracticeSessionRepository extends JpaRepository<PracticeSession, Long> {
-    
     List<PracticeSession> findByUserId(Long userId);
 }

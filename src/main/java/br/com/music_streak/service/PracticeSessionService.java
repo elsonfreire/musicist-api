@@ -23,6 +23,7 @@ public class PracticeSessionService {
                 .stream()
                 .map(session -> new PracticeSessionResponseDto(
                         session.getId(),
+                        session.getUser().getId(),
                         session.getDate(),
                         session.getDurationMinutes(),
                         session.getNotes(),
@@ -32,16 +33,13 @@ public class PracticeSessionService {
     }
 
     public PracticeSessionResponseDto createPracticeSession(PracticeSessionRequestDto requestDto, User user) {
-        PracticeSession practiceSession = new PracticeSession();
-        practiceSession.setDurationMinutes(requestDto.durationMinutes());
-        practiceSession.setNotes(requestDto.notes());
-        practiceSession.setDate(requestDto.date());
-        practiceSession.setUser(user);
+        PracticeSession practiceSession = new PracticeSession(requestDto.durationMinutes(), requestDto.notes(), requestDto.date(), user);
         
         PracticeSession savedSession = practiceSessionRepository.save(practiceSession);
 
         return new PracticeSessionResponseDto(
                 savedSession.getId(),
+                savedSession.getUser().getId(),
                 savedSession.getDate(),
                 savedSession.getDurationMinutes(),
                 savedSession.getNotes(),
