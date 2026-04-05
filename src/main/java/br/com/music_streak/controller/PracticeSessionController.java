@@ -31,7 +31,7 @@ public class PracticeSessionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PracticeSessionResponseDto>> getAllMySessions(
+    public ResponseEntity<List<PracticeSessionResponseDto>> getAllUserSessions(
             @AuthenticationPrincipal User currentUser) {
         
         return ResponseEntity.ok(practiceSessionService.getPracticeSessionsByUserId(currentUser.getId()));
