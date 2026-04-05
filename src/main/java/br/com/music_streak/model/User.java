@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Getter
@@ -30,20 +31,22 @@ public class User {
     private Long id;
     
     @Column(unique=true, nullable=false)
+    private String email;
+    
+    @Column(unique=true, nullable=false)
     private String username;
 
-    @Column(unique=true, nullable=false)
-    private String email;
-
     @Column(nullable=false)
+    @JsonIgnore
     private String passwordHash;
 
     private String instrument;
 
-    @Column(columnDefinition = "TEXT")
     private String bio;
 
-    @Column(nullable = false)
+    private Short level;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -52,5 +55,11 @@ public class User {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
+    }
+
+    public User(String email, String username, String passwordHash) {
+        this.email = email;
+        this.username = username;
+        this.passwordHash = passwordHash;
     }
 }

@@ -14,8 +14,8 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
 
-  flyway:
-    enabled: true
-    locations: classpath:db/migration
+api:
+  security:
+    token:
+      secret: ${JWT_SECRET:musicist-secret-key}
