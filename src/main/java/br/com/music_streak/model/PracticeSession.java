@@ -30,10 +30,9 @@ public class PracticeSession {
     @Column(nullable = false)
     private Integer durationMinutes;
 
-    @Column(columnDefinition = "TEXT")
     private String notes;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @PrePersist

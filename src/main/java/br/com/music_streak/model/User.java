@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Getter
 @Setter
@@ -29,14 +31,16 @@ public class User {
     private String username;
 
     @Column(nullable=false)
+    @JsonIgnore
     private String passwordHash;
 
     private String instrument;
 
-    @Column(columnDefinition = "TEXT")
     private String bio;
 
-    @Column(nullable = false)
+    private Short level;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
