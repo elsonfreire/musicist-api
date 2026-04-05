@@ -1,13 +1,12 @@
 package br.com.music_streak.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -40,4 +39,10 @@ public class PracticeSession {
         this.createdAt = LocalDateTime.now();
     }
 
+    public PracticeSession(Integer durationMinutes, String notes, LocalDate date, User user) {
+        this.durationMinutes = durationMinutes;
+        this.notes = notes;
+        this.date = date;
+        this.user = user;
+    }
 }
