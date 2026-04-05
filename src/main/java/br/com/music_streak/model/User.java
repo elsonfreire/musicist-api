@@ -1,7 +1,11 @@
-package br.com.music_streak.entity;
+package br.com.music_streak.model;
+
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,10 +23,10 @@ public class User {
     private Long id;
     
     @Column(unique=true, nullable=false)
-    private String username;
-
-    @Column(unique=true, nullable=false)
     private String email;
+    
+    @Column(unique=true, nullable=false)
+    private String username;
 
     @Column(nullable=false)
     private String passwordHash;
@@ -41,5 +45,11 @@ public class User {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
+    }
+
+    public User(String email, String username, String passwordHash) {
+        this.email = email;
+        this.username = username;
+        this.passwordHash = passwordHash;
     }
 }
