@@ -17,6 +17,8 @@ public class PracticeSessionService {
 
     @Autowired
     private PracticeSessionRepository practiceSessionRepository;
+    @Autowired
+    private UserService userService;
 
     public List<PracticeSessionResponseDto> getPracticeSessionsByUserId(Long userId) {
         return practiceSessionRepository.findByUserId(userId)
@@ -32,8 +34,10 @@ public class PracticeSessionService {
 
     public PracticeSessionResponseDto createPracticeSession(PracticeSessionRequestDto requestDto, User user) {
         PracticeSession practiceSession = new PracticeSession(requestDto.durationMinutes(), requestDto.notes(), requestDto.date(), user);
-        
         PracticeSession savedSession = practiceSessionRepository.save(practiceSession);
+
+        userService.resetStreak(user.getId());
+        userService.incrementStreak(user.getId());
 
         return new PracticeSessionResponseDto(
                 savedSession.getDate(),

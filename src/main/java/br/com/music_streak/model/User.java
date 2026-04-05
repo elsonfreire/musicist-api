@@ -46,6 +46,12 @@ public class User {
 
     private Short level;
 
+    private Integer currentStreak = 0;
+
+    private Integer LongestStreak = 0;
+
+    private LocalDateTime lastPracticeDate;
+
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 

@@ -6,5 +6,6 @@ CREATE TABLE users (
     instrument VARCHAR(100),
     level SMALLINT,
     bio TEXT,
+    streak_count INT DEFAULT 0,
     created_at TIMESTAMP NOT NULL
 );
