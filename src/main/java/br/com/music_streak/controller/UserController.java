@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.music_streak.dto.user.UserStreakResponseDto;
-import br.com.music_streak.model.User;
 import br.com.music_streak.service.UserService;
 
 @RestController
@@ -32,18 +31,7 @@ public class UserController {
 
     @GetMapping("/{id}/streak")
     public ResponseEntity<UserStreakResponseDto> getUserStreak(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
-        
-        if(user == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        UserStreakResponseDto streakDto = new UserStreakResponseDto(
-            user.getCurrentStreak(),
-            user.getLongestStreak()
-        );
-
-        return ResponseEntity.ok(streakDto);
+        return ResponseEntity.ok(userService.getStreak(id));
     }
 
     @PutMapping("/{id}")

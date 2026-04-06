@@ -6,6 +6,7 @@ import java.util.List;
 
 import br.com.music_streak.dto.user.UpdateUserRequestDto;
 import br.com.music_streak.dto.user.UserResponseDto;
+import br.com.music_streak.dto.user.UserStreakResponseDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,11 @@ public class UserService {
         if(userRepository.findByUsername(username).isPresent()) {
             throw new RuntimeException("Username is already in use");
         }
+    }
+
+    public UserStreakResponseDto getStreak(Long id) {
+        User user = findUserEntityById(id);
+        return new UserStreakResponseDto(user.getCurrentStreak(), user.getLongestStreak());
     }
 
     public void incrementStreak(Long id) {
