@@ -48,7 +48,7 @@ public class User {
 
     private Integer currentStreak = 0;
 
-    private Integer LongestStreak = 0;
+    private Integer longestStreak = 0;
 
     private LocalDateTime lastPracticeDate;
 
