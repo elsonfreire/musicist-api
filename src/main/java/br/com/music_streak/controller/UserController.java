@@ -2,15 +2,13 @@ package br.com.music_streak.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import br.com.music_streak.dto.user.UpdateUserRequestDto;
+import br.com.music_streak.dto.user.UserResponseDto;
 
-import br.com.music_streak.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import br.com.music_streak.service.UserService;
 
 @RestController
@@ -20,18 +18,18 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getUsers() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<UserResponseDto>> getUsers() {
+        return ResponseEntity.ok(userService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable("id") Long id) {
-        User user = userService.findById(id);
-        
-        if(user == null) {
-            return ResponseEntity.notFound().build();
-        }
-
+    public ResponseEntity<UserResponseDto> getUser(@PathVariable("id") Long id) {
+        UserResponseDto user = userService.findById(id);
         return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable("id") Long id, @RequestBody UpdateUserRequestDto userDetails) {
+        return ResponseEntity.ok(userService.update(id, userDetails));
     }
 }
