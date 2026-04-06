@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
-    JwtTokenService tokenService;
+    TokenService tokenService;
 
     @Autowired
     UserRepository userRepository;

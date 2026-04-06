@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.auth0.jwt.JWT;
@@ -15,7 +16,8 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import br.com.music_streak.modules.user.model.User;
 
 @Service
-public class JwtTokenService {
+@Primary
+public class JwtTokenService implements TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
     
@@ -46,7 +48,7 @@ public class JwtTokenService {
         }
     }
 
-    public Instant generateExpirationDate() {
+    private Instant generateExpirationDate() {
         return LocalDateTime.now().plusHours(24).toInstant(ZoneOffset.of("-03:00"));
     }
 }

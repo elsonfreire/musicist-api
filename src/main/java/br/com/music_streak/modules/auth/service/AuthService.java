@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.music_streak.infra.security.JwtTokenService;
+import br.com.music_streak.infra.security.TokenService;
 import br.com.music_streak.modules.auth.dto.LoginRequest;
 import br.com.music_streak.modules.auth.dto.LoginResponse;
 import br.com.music_streak.modules.auth.dto.RegisterRequest;
@@ -21,7 +21,7 @@ public class AuthService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private JwtTokenService tokenService;
+    private TokenService tokenService;
     
     public LoginResponse login(LoginRequest loginRequestDto) {
         User user = userRepository.findByEmail(loginRequestDto.email())
