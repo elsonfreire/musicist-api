@@ -3,7 +3,9 @@ package br.com.music_streak.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
+
+import br.com.music_streak.dto.user.UpdateUserRequestDto;
+import br.com.music_streak.dto.user.UserResponseDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,21 +19,44 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public List<UserResponseDto> findAll() {
+        return userRepository.findAll()
+            .stream()
+            .map(UserResponseDto::new)
+            .toList();
     }
 
-    public User findById(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        if(user.isEmpty()) {
-            return null;
+    public UserResponseDto findById(Long id) {
+        User user = this.findUserEntityById(id);
+        return new UserResponseDto(user);
+    }
+
+    public UserResponseDto update(Long id, UpdateUserRequestDto userUpdated) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        if(userUpdated.username() != null) {
+            validateUsername(userUpdated.username());
+            user.setUsername(userUpdated.username());
         }
-        return user.get(); 
+
+        if(userUpdated.instrument() != null) user.setInstrument(userUpdated.instrument());
+        if(userUpdated.bio() != null) user.setBio(userUpdated.bio());
+        if(userUpdated.level() != null) user.setLevel(userUpdated.level());
+
+        User newUser = userRepository.save(user);
+
+        return new UserResponseDto(newUser);
     }
 
-    public void incrementStreak(Long id){
-        User user = this.findById(id);
-        if(user == null) return; 
+    private void validateUsername(String username) {
+        if(userRepository.findByUsername(username).isPresent()) {
+            throw new RuntimeException("Username is already in use");
+        }
+    }
+
+    public void incrementStreak(Long id) {
+        User user = this.findUserEntityById(id);
 
         if (user.getLastPracticeDate() != null) {
             LocalDate today = LocalDate.now();
@@ -54,10 +79,10 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void resetStreak(Long id){
-        User user = this.findById(id);
+    public void resetStreak(Long id) {
+        User user = this.findUserEntityById(id);
         
-        if(user == null || user.getLastPracticeDate() == null) {
+        if(user.getLastPracticeDate() == null) {
             return;
         }
 
@@ -68,5 +93,10 @@ public class UserService {
             user.setCurrentStreak(0);
             userRepository.save(user);
         }
+    }
+
+    private User findUserEntityById(Long id) {
+        return userRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
