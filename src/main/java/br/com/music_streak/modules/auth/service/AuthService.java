@@ -5,10 +5,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.music_streak.infra.security.JwtTokenService;
-import br.com.music_streak.modules.auth.dto.LoginRequestDto;
-import br.com.music_streak.modules.auth.dto.LoginResponseDto;
-import br.com.music_streak.modules.auth.dto.RegisterRequestDto;
-import br.com.music_streak.modules.auth.dto.RegisterResponseDto;
+import br.com.music_streak.modules.auth.dto.LoginRequest;
+import br.com.music_streak.modules.auth.dto.LoginResponse;
+import br.com.music_streak.modules.auth.dto.RegisterRequest;
+import br.com.music_streak.modules.auth.dto.RegisterResponse;
 import br.com.music_streak.modules.user.model.User;
 import br.com.music_streak.modules.user.repository.UserRepository;
 
@@ -23,7 +23,7 @@ public class AuthService {
     @Autowired
     private JwtTokenService tokenService;
     
-    public LoginResponseDto login(LoginRequestDto loginRequestDto) {
+    public LoginResponse login(LoginRequest loginRequestDto) {
         User user = userRepository.findByEmail(loginRequestDto.email())
             .orElseThrow(() -> new RuntimeException("User not found"));
         
@@ -33,10 +33,10 @@ public class AuthService {
 
         var token = tokenService.generateToken(user);
 
-        return new LoginResponseDto(token);
+        return new LoginResponse(token);
     }
 
-    public RegisterResponseDto register(RegisterRequestDto registerRequestDto) {
+    public RegisterResponse register(RegisterRequest registerRequestDto) {
         String encryptedPassword = passwordEncoder.encode(registerRequestDto.password());
         
         if(userRepository.findByEmail(registerRequestDto.email()).isPresent()) {
@@ -46,6 +46,6 @@ public class AuthService {
         User newUser = new User(registerRequestDto.email(), registerRequestDto.username(), encryptedPassword);
         User user = userRepository.save(newUser);
 
-        return new RegisterResponseDto(user.getEmail(), user.getUsername());
+        return new RegisterResponse(user.getEmail(), user.getUsername());
     }
 }

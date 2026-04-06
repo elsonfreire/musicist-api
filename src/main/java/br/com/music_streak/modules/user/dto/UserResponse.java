@@ -2,7 +2,7 @@ package br.com.music_streak.modules.user.dto;
 
 import br.com.music_streak.modules.user.model.User;
 
-public record UserResponseDto(
+public record UserResponse(
     Long id, 
     String username, 
     String email, 
@@ -10,7 +10,7 @@ public record UserResponseDto(
     Short level, 
     String instrument
 ) {
-    public UserResponseDto(User user) {
+    public UserResponse(User user) {
         this(user.getId(), user.getUsername(), user.getEmail(), user.getBio(), user.getLevel(), user.getInstrument());
     }
 }

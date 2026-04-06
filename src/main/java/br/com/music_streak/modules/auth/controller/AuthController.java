@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.music_streak.modules.auth.dto.LoginRequestDto;
-import br.com.music_streak.modules.auth.dto.LoginResponseDto;
-import br.com.music_streak.modules.auth.dto.RegisterRequestDto;
-import br.com.music_streak.modules.auth.dto.RegisterResponseDto;
+import br.com.music_streak.modules.auth.dto.LoginRequest;
+import br.com.music_streak.modules.auth.dto.LoginResponse;
+import br.com.music_streak.modules.auth.dto.RegisterRequest;
+import br.com.music_streak.modules.auth.dto.RegisterResponse;
 import br.com.music_streak.modules.auth.service.AuthService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,12 +23,12 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequestDto) {
         return ResponseEntity.ok(authService.login(loginRequestDto));
     }
     
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDto> register(@RequestBody RegisterRequestDto registerRequestDto) {
+    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest registerRequestDto) {
         return ResponseEntity.status(201).body(authService.register(registerRequestDto));
     }
     
