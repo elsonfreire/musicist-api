@@ -2,8 +2,8 @@ package br.com.music_streak.service;
 
 import java.util.List;
 
-import br.com.music_streak.dto.user.UpdateUserRequest;
-import br.com.music_streak.dto.user.UserResponse;
+import br.com.music_streak.dto.user.UpdateUserRequestDto;
+import br.com.music_streak.dto.user.UserResponseDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,21 +16,21 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     
-    public List<UserResponse> findAll() {
+    public List<UserResponseDto> findAll() {
         return userRepository.findAll()
             .stream()
-            .map(UserResponse::new)
+            .map(UserResponseDto::new)
             .toList();
     }
 
-    public UserResponse findById(Long id) {
+    public UserResponseDto findById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return new UserResponse(user);
+        return new UserResponseDto(user);
     }
 
-    public UserResponse update(Long id, UpdateUserRequest userUpdated) {
+    public UserResponseDto update(Long id, UpdateUserRequestDto userUpdated) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -45,7 +45,7 @@ public class UserService {
 
         User newUser = userRepository.save(user);
 
-        return new UserResponse(newUser);
+        return new UserResponseDto(newUser);
     }
 
     private void validateUsername(String username) {
