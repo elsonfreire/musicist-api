@@ -1,18 +1,17 @@
-package br.com.music_streak.service;
+package br.com.music_streak.modules.user.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import br.com.music_streak.dto.user.UpdateUserRequestDto;
-import br.com.music_streak.dto.user.UserResponseDto;
-import br.com.music_streak.dto.user.UserStreakResponseDto;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.music_streak.model.User;
-import br.com.music_streak.repository.UserRepository;
+import br.com.music_streak.modules.user.dto.UserUpdateRequest;
+import br.com.music_streak.modules.user.dto.UserResponse;
+import br.com.music_streak.modules.user.dto.UserStreakResponse;
+import br.com.music_streak.modules.user.model.User;
+import br.com.music_streak.modules.user.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -20,19 +19,19 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     
-    public List<UserResponseDto> findAll() {
+    public List<UserResponse> findAll() {
         return userRepository.findAll()
             .stream()
-            .map(UserResponseDto::new)
+            .map(UserResponse::new)
             .toList();
     }
 
-    public UserResponseDto findById(Long id) {
+    public UserResponse findById(Long id) {
         User user = this.findUserEntityById(id);
-        return new UserResponseDto(user);
+        return new UserResponse(user);
     }
 
-    public UserResponseDto update(Long id, UpdateUserRequestDto userUpdated) {
+    public UserResponse update(Long id, UserUpdateRequest userUpdated) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -47,7 +46,7 @@ public class UserService {
 
         User newUser = userRepository.save(user);
 
-        return new UserResponseDto(newUser);
+        return new UserResponse(newUser);
     }
 
     private void validateUsername(String username) {
@@ -56,9 +55,9 @@ public class UserService {
         }
     }
 
-    public UserStreakResponseDto getStreak(Long id) {
+    public UserStreakResponse getStreak(Long id) {
         User user = findUserEntityById(id);
-        return new UserStreakResponseDto(user.getCurrentStreak(), user.getLongestStreak());
+        return new UserStreakResponse(user.getCurrentStreak(), user.getLongestStreak());
     }
 
     public void incrementStreak(Long id) {

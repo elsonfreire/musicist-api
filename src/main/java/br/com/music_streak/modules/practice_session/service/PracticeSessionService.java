@@ -1,4 +1,4 @@
-package br.com.music_streak.service;
+package br.com.music_streak.modules.practice_session.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,11 +6,12 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.music_streak.dto.practice_session.PracticeSessionRequestDto;
-import br.com.music_streak.dto.practice_session.PracticeSessionResponseDto;
-import br.com.music_streak.model.PracticeSession;
-import br.com.music_streak.model.User;
-import br.com.music_streak.repository.PracticeSessionRepository;
+import br.com.music_streak.modules.practice_session.dto.PracticeSessionRequest;
+import br.com.music_streak.modules.practice_session.dto.PracticeSessionResponse;
+import br.com.music_streak.modules.practice_session.model.PracticeSession;
+import br.com.music_streak.modules.practice_session.repository.PracticeSessionRepository;
+import br.com.music_streak.modules.user.model.User;
+import br.com.music_streak.modules.user.service.UserService;
 
 @Service
 public class PracticeSessionService {
@@ -20,10 +21,10 @@ public class PracticeSessionService {
     @Autowired
     private UserService userService;
 
-    public List<PracticeSessionResponseDto> getPracticeSessionsByUserId(Long userId) {
+    public List<PracticeSessionResponse> getPracticeSessionsByUserId(Long userId) {
         return practiceSessionRepository.findByUserId(userId)
                 .stream()
-                .map(session -> new PracticeSessionResponseDto(
+                .map(session -> new PracticeSessionResponse(
                         session.getDate(),
                         session.getDurationMinutes(),
                         session.getNotes(),
@@ -32,14 +33,14 @@ public class PracticeSessionService {
                 .collect(Collectors.toList());
     }
 
-    public PracticeSessionResponseDto createPracticeSession(PracticeSessionRequestDto requestDto, User user) {
+    public PracticeSessionResponse createPracticeSession(PracticeSessionRequest requestDto, User user) {
         PracticeSession practiceSession = new PracticeSession(requestDto.durationMinutes(), requestDto.notes(), requestDto.date(), user);
         PracticeSession savedSession = practiceSessionRepository.save(practiceSession);
 
         userService.resetStreak(user.getId());
         userService.incrementStreak(user.getId());
 
-        return new PracticeSessionResponseDto(
+        return new PracticeSessionResponse(
                 savedSession.getDate(),
                 savedSession.getDurationMinutes(),
                 savedSession.getNotes(),

@@ -1,4 +1,4 @@
-package br.com.music_streak.model;
+package br.com.music_streak.modules.user.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +18,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.music_streak.modules.practice_session.model.PracticeSession;
 
 @Entity
 @Getter

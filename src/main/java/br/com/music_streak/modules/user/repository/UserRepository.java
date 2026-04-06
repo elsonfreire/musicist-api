@@ -1,8 +1,8 @@
-package br.com.music_streak.repository;
+package br.com.music_streak.modules.user.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.music_streak.model.User;
+import br.com.music_streak.modules.user.model.User;
 
 import java.util.Optional;
 

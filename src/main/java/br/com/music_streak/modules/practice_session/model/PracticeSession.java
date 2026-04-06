@@ -1,8 +1,10 @@
-package br.com.music_streak.model;
+package br.com.music_streak.modules.practice_session.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import br.com.music_streak.modules.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
