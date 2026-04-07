@@ -52,10 +52,10 @@ public class PracticeSessionService {
 
     public void deletePracticeSession(Long id, User currentUser) {
         PracticeSession practiceSession = practiceSessionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Sessão não encontrada."));
+                .orElseThrow(() -> new RuntimeException("Practice not found."));
 
         if (!practiceSession.getUser().getId().equals(currentUser.getId())) {
-            throw new RuntimeException("Acesso negado: você não pode deletar a sessão de outro usuário.");
+            throw new RuntimeException("Acess denied: you can't delete a practice from another user.");
         }
         practiceSessionRepository.delete(practiceSession);
     }
