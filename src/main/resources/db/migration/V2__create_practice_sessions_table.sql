@@ -2,6 +2,7 @@ CREATE TABLE practice_sessions (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     user_id INT NOT NULL,
     date DATE NOT NULL,
+    instrument instrument_type DEFAULT 'other',
     duration_minutes INT NOT NULL,
     notes TEXT,
     created_at TIMESTAMP NOT NULL,

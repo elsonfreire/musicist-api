@@ -1,4 +1,7 @@
 package br.com.music_streak.modules.user.dto;
 
-public record UserUpdateRequest(String username, String instrument, String bio, Short level) {
+import br.com.music_streak.common.enums.InstrumentType;
+import br.com.music_streak.common.enums.LevelType;
+
+public record UserUpdateRequest(String username, InstrumentType instrument, String bio, LevelType level) {
 }

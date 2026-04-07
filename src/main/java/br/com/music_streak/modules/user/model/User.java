@@ -7,6 +7,8 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,6 +21,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.music_streak.common.enums.InstrumentType;
+import br.com.music_streak.common.enums.LevelType;
 import br.com.music_streak.modules.practice_session.model.PracticeSession;
 
 @Entity
@@ -42,11 +46,13 @@ public class User {
     @JsonIgnore
     private String passwordHash;
 
-    private String instrument;
+    @Enumerated(EnumType.STRING)
+    private InstrumentType instrument;
 
     private String bio;
 
-    private Short level;
+    @Enumerated(EnumType.STRING)
+    private LevelType level;
 
     private Integer currentStreak = 0;
 

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import br.com.music_streak.common.enums.InstrumentType;
 import br.com.music_streak.modules.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +28,10 @@ public class PracticeSession {
 
     @Column(nullable = false)
     private LocalDate date;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private InstrumentType instrument;
 
     @Column(nullable = false)
     private Integer durationMinutes;
