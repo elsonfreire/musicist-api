@@ -24,30 +24,18 @@ public class PracticeSessionService {
     public List<PracticeSessionResponse> getPracticeSessionsByUserId(Long userId) {
         return practiceSessionRepository.findByUserId(userId)
                 .stream()
-                .map(session -> new PracticeSessionResponse(
-                        session.getId(),
-                        session.getDate(),
-                        session.getDurationMinutes(),
-                        session.getNotes(),
-                        session.getCreatedAt()
-                ))
+                .map(session -> new PracticeSessionResponse(session))
                 .collect(Collectors.toList());
     }
 
     public PracticeSessionResponse createPracticeSession(PracticeSessionRequest requestDto, User user) {
-        PracticeSession practiceSession = new PracticeSession(requestDto.durationMinutes(), requestDto.notes(), requestDto.date(), user);
+        PracticeSession practiceSession = new PracticeSession(requestDto.durationMinutes(), requestDto.instrument(), requestDto.notes(), requestDto.date(), user);
         PracticeSession savedSession = practiceSessionRepository.save(practiceSession);
 
         userService.resetStreak(user.getId());
         userService.incrementStreak(user.getId());
 
-        return new PracticeSessionResponse(
-                savedSession.getId(),
-                savedSession.getDate(),
-                savedSession.getDurationMinutes(),
-                savedSession.getNotes(),
-                savedSession.getCreatedAt()
-        );
+        return new PracticeSessionResponse(savedSession);
     }
 
     public void deletePracticeSession(Long id, User currentUser) {
