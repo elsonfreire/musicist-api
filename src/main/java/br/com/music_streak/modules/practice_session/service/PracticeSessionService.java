@@ -25,6 +25,7 @@ public class PracticeSessionService {
         return practiceSessionRepository.findByUserId(userId)
                 .stream()
                 .map(session -> new PracticeSessionResponse(
+                        session.getId(),
                         session.getDate(),
                         session.getDurationMinutes(),
                         session.getNotes(),
@@ -41,10 +42,21 @@ public class PracticeSessionService {
         userService.incrementStreak(user.getId());
 
         return new PracticeSessionResponse(
+                savedSession.getId(),
                 savedSession.getDate(),
                 savedSession.getDurationMinutes(),
                 savedSession.getNotes(),
                 savedSession.getCreatedAt()
         );
+    }
+
+    public void deletePracticeSession(Long id, User currentUser) {
+        PracticeSession practiceSession = practiceSessionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Sessão não encontrada."));
+
+        if (!practiceSession.getUser().getId().equals(currentUser.getId())) {
+            throw new RuntimeException("Acesso negado: você não pode deletar a sessão de outro usuário.");
+        }
+        practiceSessionRepository.delete(practiceSession);
     }
 }

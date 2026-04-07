@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record PracticeSessionResponse(
+    Long id,
     LocalDate date,
     Integer durationMinutes,
     String notes,
