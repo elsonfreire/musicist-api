@@ -29,7 +29,7 @@ public class PracticeSessionService {
     }
 
     public PracticeSessionResponse createPracticeSession(PracticeSessionRequest requestDto, User user) {
-        PracticeSession practiceSession = new PracticeSession(requestDto.durationMinutes(), requestDto.notes(), requestDto.date(), user);
+        PracticeSession practiceSession = new PracticeSession(requestDto.durationMinutes(), requestDto.instrument(), requestDto.notes(), requestDto.date(), user);
         PracticeSession savedSession = practiceSessionRepository.save(practiceSession);
 
         userService.resetStreak(user.getId());
