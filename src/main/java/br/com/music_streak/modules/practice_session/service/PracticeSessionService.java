@@ -55,7 +55,7 @@ public class PracticeSessionService {
                 .orElseThrow(() -> new RuntimeException("Practice not found."));
 
         if (!practiceSession.getUser().getId().equals(currentUser.getId())) {
-            throw new RuntimeException("Acess denied: you can't delete a practice from another user.");
+            throw new RuntimeException("Access denied: you can't delete a practice from another user.");
         }
         practiceSessionRepository.delete(practiceSession);
     }
