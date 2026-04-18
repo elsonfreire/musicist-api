@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com</groupId>
-	<artifactId>music-streak</artifactId>
+	<artifactId>musicist</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>
