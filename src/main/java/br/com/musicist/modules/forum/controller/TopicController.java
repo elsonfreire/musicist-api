@@ -12,7 +12,6 @@ import br.com.musicist.modules.forum.service.TopicService;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
-
 @RestController
 @RequestMapping("/forum/topics")
 public class TopicController {
