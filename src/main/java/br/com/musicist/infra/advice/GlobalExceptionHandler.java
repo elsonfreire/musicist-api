@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiErrorResponse> handleException(Exception exception, HttpServletRequest request) {
         ApiErrorResponse apiError = new ApiErrorResponse(
             HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            "Internal server error",
+            exception.getMessage(),
             request.getRequestURI(),
             LocalDateTime.now()
         );
