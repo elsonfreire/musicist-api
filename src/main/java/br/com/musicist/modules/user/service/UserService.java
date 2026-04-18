@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.musicist.modules.user.dto.UserUpdateRequest;
+import br.com.musicist.modules.user.exceptions.UserNotFoundException;
+import br.com.musicist.modules.user.exceptions.UsernameAlreadyInUseException;
 import br.com.musicist.modules.user.dto.UserResponse;
 import br.com.musicist.modules.user.dto.UserStreakResponse;
 import br.com.musicist.modules.user.model.User;
@@ -33,7 +35,7 @@ public class UserService {
 
     public UserResponse update(Long id, UserUpdateRequest userUpdated) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException());
 
         if(userUpdated.username() != null) {
             validateUsername(userUpdated.username());
@@ -51,7 +53,7 @@ public class UserService {
 
     private void validateUsername(String username) {
         if(userRepository.findByUsername(username).isPresent()) {
-            throw new RuntimeException("Username is already in use");
+            throw new UsernameAlreadyInUseException();
         }
     }
 
@@ -102,6 +104,6 @@ public class UserService {
 
     private User findUserEntityById(Long id) {
         return userRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("User not found"));
+            .orElseThrow(() -> new UserNotFoundException());
     }
 }
