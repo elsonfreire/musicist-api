@@ -9,6 +9,9 @@ import br.com.musicist.modules.auth.dto.LoginRequest;
 import br.com.musicist.modules.auth.dto.LoginResponse;
 import br.com.musicist.modules.auth.dto.RegisterRequest;
 import br.com.musicist.modules.auth.dto.RegisterResponse;
+import br.com.musicist.modules.auth.exceptions.UserAlreadyExistsException;
+import br.com.musicist.modules.auth.exceptions.UserNotFoundException;
+import br.com.musicist.modules.auth.exceptions.WrongPasswordException;
 import br.com.musicist.modules.user.model.User;
 import br.com.musicist.modules.user.repository.UserRepository;
 
@@ -25,10 +28,10 @@ public class AuthService {
     
     public LoginResponse login(LoginRequest loginRequestDto) {
         User user = userRepository.findByEmail(loginRequestDto.email())
-            .orElseThrow(() -> new RuntimeException("User not found"));
+            .orElseThrow(() -> new UserNotFoundException());
         
         if(!passwordEncoder.matches(loginRequestDto.password(), user.getPasswordHash())) {
-            throw new RuntimeException("Wrong password");
+            throw new WrongPasswordException();
         }
 
         var token = tokenService.generateToken(user);
@@ -40,7 +43,11 @@ public class AuthService {
         String encryptedPassword = passwordEncoder.encode(registerRequestDto.password());
         
         if(userRepository.findByEmail(registerRequestDto.email()).isPresent()) {
-            throw new RuntimeException("User already exists");
+            throw new UserAlreadyExistsException("email");
+        }
+
+        if(userRepository.findByUsername(registerRequestDto.username()).isPresent()) {
+            throw new UserAlreadyExistsException("username");
         }
 
         User newUser = new User(registerRequestDto.email(), registerRequestDto.username(), encryptedPassword);

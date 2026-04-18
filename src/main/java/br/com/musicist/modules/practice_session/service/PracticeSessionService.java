@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import br.com.musicist.modules.practice_session.dto.PracticeSessionRequest;
 import br.com.musicist.modules.practice_session.dto.PracticeSessionResponse;
+import br.com.musicist.modules.practice_session.exceptions.CannotDeleteFromOtherUserException;
+import br.com.musicist.modules.practice_session.exceptions.PracticeSessionNotFoundException;
 import br.com.musicist.modules.practice_session.model.PracticeSession;
 import br.com.musicist.modules.practice_session.repository.PracticeSessionRepository;
 import br.com.musicist.modules.user.model.User;
@@ -40,10 +42,10 @@ public class PracticeSessionService {
 
     public void deletePracticeSession(Long id, User currentUser) {
         PracticeSession practiceSession = practiceSessionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Practice not found."));
+                .orElseThrow(() -> new PracticeSessionNotFoundException());
 
         if (!practiceSession.getUser().getId().equals(currentUser.getId())) {
-            throw new RuntimeException("Access denied: you can't delete a practice from another user.");
+            throw new CannotDeleteFromOtherUserException();
         }
         practiceSessionRepository.delete(practiceSession);
     }
