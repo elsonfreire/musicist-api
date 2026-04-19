@@ -6,6 +6,6 @@ import br.com.musicist.common.exceptions.ApiException;
 
 public class CannotDeleteFromOtherUserException extends ApiException {
     public CannotDeleteFromOtherUserException() {
-        super("You cannot delete another user's forum topic", HttpStatus.UNAUTHORIZED);
+        super("You cannot delete another user's practice session", HttpStatus.UNAUTHORIZED);
     }
 }

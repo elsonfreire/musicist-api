@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import br.com.musicist.modules.forum.dto.TopicRequest;
 import br.com.musicist.modules.forum.dto.TopicResponse;
+import br.com.musicist.modules.forum.exceptions.CannotDeleteFromOtherUserException;
 import br.com.musicist.modules.forum.exceptions.TopicNotFoundException;
 import br.com.musicist.modules.forum.model.Topic;
 import br.com.musicist.modules.forum.repository.TopicRepository;
-import br.com.musicist.modules.practice_session.exceptions.CannotDeleteFromOtherUserException;
 import br.com.musicist.modules.user.model.User;
 
 @Service
