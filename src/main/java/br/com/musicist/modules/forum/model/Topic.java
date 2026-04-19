@@ -2,6 +2,7 @@ package br.com.musicist.modules.forum.model;
 
 import java.time.LocalDateTime;
 
+import br.com.musicist.modules.forum.dto.TopicRequest;
 import br.com.musicist.modules.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,5 +37,11 @@ public class Topic {
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
+    }
+
+    public Topic(String title, String description, User user) {
+        this.title = title;
+        this.description = description;
+        this.user = user;
     }
 }

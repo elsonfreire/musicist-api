@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.musicist.modules.forum.dto.TopicRequest;
 import br.com.musicist.modules.forum.dto.TopicResponse;
+import br.com.musicist.modules.forum.model.Topic;
 import br.com.musicist.modules.forum.repository.TopicRepository;
+import br.com.musicist.modules.user.model.User;
 
 @Service
 public class TopicService {
@@ -18,5 +21,10 @@ public class TopicService {
             .stream()
             .map(TopicResponse::new)
             .toList();
+    }
+
+    public TopicResponse create(TopicRequest topicRequest, User user) {
+        Topic topic = new Topic(topicRequest.title(), topicRequest.description(), user);
+        return new TopicResponse(topicRepository.save(topic));
     }
 }
