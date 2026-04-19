@@ -26,7 +26,7 @@ public class TopicService {
     }
 
     public TopicResponse create(TopicRequest topicRequest, User user) {
-        Topic topic = new Topic(topicRequest.title(), topicRequest.description(), user);
+        Topic topic = new Topic(topicRequest.title(), topicRequest.category(), topicRequest.description(), user);
         return new TopicResponse(topicRepository.save(topic));
     }
 
