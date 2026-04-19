@@ -1,4 +1,4 @@
-package br.com.musicist.modules.practice_session.exceptions;
+package br.com.musicist.modules.forum.exceptions;
 
 import org.springframework.http.HttpStatus;
 
@@ -6,6 +6,6 @@ import br.com.musicist.common.exceptions.ApiException;
 
 public class CannotDeleteFromOtherUserException extends ApiException {
     public CannotDeleteFromOtherUserException() {
-        super("You cannot delete another user's forum topic", HttpStatus.UNAUTHORIZED);
+        super("You cannot delete another user's topic", HttpStatus.UNAUTHORIZED);
     }
 }
