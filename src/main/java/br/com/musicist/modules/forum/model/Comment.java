@@ -47,4 +47,10 @@ public class Comment {
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
     }
+
+    public Comment(String content, User author, Topic topic) {
+        this.content = content;
+        this.author = author;
+        this.topic = topic;
+    }
 }

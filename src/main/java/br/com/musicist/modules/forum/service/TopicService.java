@@ -18,6 +18,11 @@ public class TopicService {
     @Autowired
     private TopicRepository topicRepository;
 
+    public Topic findById(Long topicId) {
+        return topicRepository.findById(topicId)
+            .orElseThrow(() -> new RuntimeException("Topic does not exist"));
+    }
+
     public List<TopicResponse> findAll() {
         return topicRepository.findAll()
             .stream()
