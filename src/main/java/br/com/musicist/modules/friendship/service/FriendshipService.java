@@ -1,6 +1,6 @@
 package br.com.musicist.modules.friendship.service;
 
-import br.com.musicist.common.enums.FriendshipStatus;
+import br.com.musicist.common.enums.FriendshipStatusType;
 import br.com.musicist.modules.friendship.dto.FriendshipResponse;
 import br.com.musicist.modules.friendship.exceptions.FriendshipAlreadyExistsException;
 import br.com.musicist.modules.friendship.exceptions.FriendshipNotFoundException;
@@ -47,7 +47,7 @@ public class FriendshipService {
         if (!friendship.getReceiver().getId().equals(currentUserId))
             throw new FriendshipUnauthorizedException();
 
-        friendship.setStatus(FriendshipStatus.ACCEPTED);
+        friendship.setStatus(FriendshipStatusType.ACCEPTED);
     }
 
     public void removeFriend(Long userId, Long friendId) {
@@ -66,7 +66,7 @@ public class FriendshipService {
     }
 
     public List<FriendshipResponse> getPendingRequests(Long userId) {
-        return friendshipRepository.findByReceiverIdAndStatus(userId, FriendshipStatus.PENDING)
+        return friendshipRepository.findByReceiverIdAndStatus(userId, FriendshipStatusType.PENDING)
                 .stream()
                 .map(FriendshipResponse::from)
                 .toList();
