@@ -1,6 +1,7 @@
 package br.com.musicist.modules.auth.controller;
 
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +24,12 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequestDto) {
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest loginRequestDto) {
         return ResponseEntity.ok(authService.login(loginRequestDto));
     }
     
     @PostMapping("/register")
-    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest registerRequestDto) {
+    public ResponseEntity<RegisterResponse> register(@RequestBody @Valid RegisterRequest registerRequestDto) {
         return ResponseEntity.status(201).body(authService.register(registerRequestDto));
     }
     

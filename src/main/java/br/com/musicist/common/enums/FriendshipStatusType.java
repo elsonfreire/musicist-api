@@ -1,5 +1,5 @@
 package br.com.musicist.common.enums;
 
-public enum FriendshipStatus {
+public enum FriendshipStatusType {
     PENDING, ACCEPTED, BLOCKED
 }

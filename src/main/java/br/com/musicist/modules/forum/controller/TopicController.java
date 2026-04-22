@@ -3,6 +3,7 @@ package br.com.musicist.modules.forum.controller;
 import br.com.musicist.modules.forum.service.CommentService;
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -46,7 +47,7 @@ public class TopicController {
 
     @PostMapping
     public ResponseEntity<TopicResponse> create(
-        @RequestBody TopicRequest topicRequest,
+        @RequestBody @Valid TopicRequest topicRequest,
         @AuthenticationPrincipal User currentUser
     ) {
         return ResponseEntity.status(201).body(topicService.create(topicRequest, currentUser));
@@ -69,7 +70,7 @@ public class TopicController {
     @PostMapping("/{id}/comments")
     public ResponseEntity<CommentResponse> createTopicComment(
         @PathVariable("id") Long id,
-        @RequestBody CommentRequest commentRequest,
+        @RequestBody @Valid CommentRequest commentRequest,
         @AuthenticationPrincipal User currentUser
     ) {
         return ResponseEntity.status(201).body(commentService.create(commentRequest, id, currentUser));

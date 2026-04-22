@@ -2,6 +2,7 @@ package br.com.musicist.modules.user.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> updateUser(@PathVariable("id") Long id, @RequestBody UserUpdateRequest userDetails) {
+    public ResponseEntity<UserResponse> updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserUpdateRequest userDetails) {
         return ResponseEntity.ok(userService.update(id, userDetails));
     }
 }

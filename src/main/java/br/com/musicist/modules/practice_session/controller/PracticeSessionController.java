@@ -2,6 +2,7 @@ package br.com.musicist.modules.practice_session.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +28,7 @@ public class PracticeSessionController {
 
     @PostMapping
     public ResponseEntity<PracticeSessionResponse> create(
-            @RequestBody PracticeSessionRequest dto,
+            @RequestBody @Valid PracticeSessionRequest dto,
             @AuthenticationPrincipal User currentUser) {
         return ResponseEntity.status(201).body(practiceSessionService.createPracticeSession(dto, currentUser));
     }
