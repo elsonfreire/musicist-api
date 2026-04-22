@@ -45,6 +45,13 @@ public class UserService {
         if(userUpdated.instrument() != null) user.setInstrument(userUpdated.instrument());
         if(userUpdated.bio() != null) user.setBio(userUpdated.bio());
         if(userUpdated.level() != null) user.setLevel(userUpdated.level());
+        if(userUpdated.city() != null) user.setCity(userUpdated.city());
+        if(userUpdated.state() != null) user.setState(userUpdated.state());
+        if(userUpdated.favoriteGenre() != null) user.setFavoriteGenre(userUpdated.favoriteGenre());
+        if(userUpdated.interests() != null) {
+            user.getInterests().clear(); 
+            user.getInterests().addAll(userUpdated.interests()); 
+        }
 
         User newUser = userRepository.save(user);
 

@@ -4,14 +4,24 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.musicist.common.enums.InstrumentType;
+import br.com.musicist.common.enums.InterestType;
+import br.com.musicist.common.enums.LevelType;
+import br.com.musicist.common.enums.MusicGenreType;
+import br.com.musicist.modules.practice_session.model.PracticeSession;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -19,11 +29,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import br.com.musicist.common.enums.InstrumentType;
-import br.com.musicist.common.enums.LevelType;
-import br.com.musicist.modules.practice_session.model.PracticeSession;
 
 @Entity
 @Getter
@@ -53,6 +58,19 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private LevelType level;
+
+    private String city;
+
+    private String state;
+
+    @Enumerated(EnumType.STRING)
+    private MusicGenreType favoriteGenre;
+
+    @ElementCollection(targetClass = InterestType.class)
+    @CollectionTable(name = "user_interests", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "interest")
+    private List<InterestType> interests = new ArrayList<>();
 
     private Integer currentStreak = 0;
 
