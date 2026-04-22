@@ -1,6 +1,6 @@
 package br.com.musicist.modules.friendship.model;
 
-import br.com.musicist.common.enums.FriendshipStatus;
+import br.com.musicist.common.enums.FriendshipStatusType;
 import br.com.musicist.modules.user.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,7 +29,7 @@ public class Friendship {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private FriendshipStatus status = FriendshipStatus.PENDING;
+    private FriendshipStatusType status = FriendshipStatusType.PENDING;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

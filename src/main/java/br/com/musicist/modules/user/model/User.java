@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.musicist.common.enums.InstrumentType;
 import br.com.musicist.common.enums.InterestType;
 import br.com.musicist.common.enums.LevelType;
-import br.com.musicist.common.enums.MusicGenre;
+import br.com.musicist.common.enums.MusicGenreType;
 import br.com.musicist.modules.practice_session.model.PracticeSession;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
@@ -64,7 +64,7 @@ public class User {
     private String state;
 
     @Enumerated(EnumType.STRING)
-    private MusicGenre favoriteGenre;
+    private MusicGenreType favoriteGenre;
 
     @ElementCollection(targetClass = InterestType.class)
     @CollectionTable(name = "user_interests", joinColumns = @JoinColumn(name = "user_id"))

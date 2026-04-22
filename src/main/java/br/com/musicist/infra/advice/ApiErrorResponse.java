@@ -6,5 +6,6 @@ public record ApiErrorResponse(
     int status,
     String message,
     String path,
+    Object details,
     LocalDateTime timestamp
 ) {}

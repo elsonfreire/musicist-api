@@ -1,15 +1,17 @@
 package br.com.musicist.modules.friendship.repository;
 
+
 import java.util.List;
 import java.util.Optional;
+
+
+import br.com.musicist.common.enums.FriendshipStatusType;
+import br.com.musicist.modules.friendship.model.Friendship;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import br.com.musicist.common.enums.FriendshipStatus;
-import br.com.musicist.modules.friendship.model.Friendship;
 
 @Repository
 public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
@@ -27,7 +29,8 @@ public interface FriendshipRepository extends JpaRepository<Friendship, Long> {
     """)
     List<Friendship> findAcceptedFriendships(@Param("userId") Long userId);
 
-    List<Friendship> findByReceiverIdAndStatus(Long receiverId, FriendshipStatus status);
+
+    List<Friendship> findByReceiverIdAndStatus(Long receiverId, FriendshipStatusType status);
 
     @Query("""
         SELECT f.receiver.id FROM Friendship f WHERE f.requester.id = :userId

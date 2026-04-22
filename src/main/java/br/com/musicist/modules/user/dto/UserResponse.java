@@ -6,7 +6,7 @@ import java.util.List;
 import br.com.musicist.common.enums.InstrumentType;
 import br.com.musicist.common.enums.InterestType;
 import br.com.musicist.common.enums.LevelType;
-import br.com.musicist.common.enums.MusicGenre;
+import br.com.musicist.common.enums.MusicGenreType;
 import br.com.musicist.modules.user.model.User;
 
 public record UserResponse(
@@ -18,7 +18,7 @@ public record UserResponse(
     InstrumentType instrument,
     String city,
     String state,
-    MusicGenre favoriteGenre,
+    MusicGenreType favoriteGenre,
     List<InterestType> interests,
     LocalDateTime createdAt
 ) {
