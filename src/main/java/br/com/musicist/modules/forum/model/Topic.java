@@ -1,6 +1,7 @@
 package br.com.musicist.modules.forum.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import br.com.musicist.common.enums.ForumCategoryType;
 import br.com.musicist.modules.user.model.User;
@@ -37,6 +38,9 @@ public class Topic {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @OneToMany(mappedBy = "topic", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
 
     @PrePersist
     public void prePersist() {
