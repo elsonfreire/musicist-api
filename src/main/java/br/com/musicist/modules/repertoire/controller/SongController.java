@@ -1,6 +1,7 @@
 package br.com.musicist.modules.repertoire.controller;
 
 import br.com.musicist.modules.repertoire.dto.SongRequest;
+import br.com.musicist.modules.repertoire.dto.UpdateStatusSongRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,5 +32,13 @@ public class SongController {
   public ResponseEntity<SongResponse> create(
       @RequestBody @Valid SongRequest dto, @AuthenticationPrincipal User currentUser) {
     return ResponseEntity.status(201).body(songService.addSong(dto, currentUser));
+  }
+
+  @PatchMapping("/{id}/status")
+  public ResponseEntity<SongResponse> updateSongStatus(
+      @PathVariable Long id,
+      @RequestBody @Valid UpdateStatusSongRequest dto,
+      @AuthenticationPrincipal User currentUser) {
+    return ResponseEntity.ok().body(songService.updateSongStatus(id, dto.status(), currentUser));
   }
 }

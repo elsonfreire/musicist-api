@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import br.com.musicist.modules.repertoire.dto.SongRequest;
+import br.com.musicist.modules.repertoire.exceptions.SongNotFoundException;
 import br.com.musicist.modules.repertoire.model.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,14 @@ public class SongService {
             requestDto.title(),
             requestDto.artist(),
             requestDto.difficulty());
+    return new SongResponse(songRepository.save(song));
+  }
+
+  public SongResponse updateSongStatus(Long id, LearningStatusType status, User user) {
+    Song song =
+        songRepository.findByIdAndUser(id, user).orElseThrow(() -> new SongNotFoundException());
+    song.setStatus((status));
+
     return new SongResponse(songRepository.save(song));
   }
 }
