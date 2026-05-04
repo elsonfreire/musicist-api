@@ -29,33 +29,46 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "songs")
 public class Song {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id", nullable = false)
+  private User user;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private LearningStatusType status;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private LearningStatusType status;
 
-    @Column(nullable = false)
-    private String title;
+  @Column(nullable = false)
+  private String title;
 
-    @Column(nullable = false)
-    private String artist;
+  @Column(nullable = false)
+  private String artist;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private DifficultyType difficulty;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private DifficultyType difficulty;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+  @Column(nullable = false, updatable = false)
+  private LocalDateTime createdAt;
 
-    @PrePersist
-    public void prePersist() {
-        this.createdAt = LocalDateTime.now();
-    }
+  @PrePersist
+  public void prePersist() {
+    this.createdAt = LocalDateTime.now();
+  }
+
+  public Song(
+      User user,
+      LearningStatusType status,
+      String title,
+      String artist,
+      DifficultyType difficulty) {
+    this.user = user;
+    this.status = status;
+    this.title = title;
+    this.artist = artist;
+    this.difficulty = difficulty;
+  }
 }

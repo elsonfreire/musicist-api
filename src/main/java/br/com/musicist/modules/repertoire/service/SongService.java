@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import br.com.musicist.modules.repertoire.dto.SongRequest;
+import br.com.musicist.modules.repertoire.model.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,20 +16,24 @@ import br.com.musicist.modules.user.model.User;
 
 @Service
 public class SongService {
-    @Autowired
-    SongRepository songRepository;
+  @Autowired SongRepository songRepository;
 
-    public Map<LearningStatusType, List<SongResponse>> findAllByUser(User user) {
-        return songRepository.findAllByUser(user)
-            .stream()
-            .collect(
-                Collectors.groupingBy(
-                    song -> song.getStatus(),
-                    Collectors.mapping(
-                        SongResponse::new, 
-                        Collectors.toList()
-                    )
-                )
-            );
-    }
+  public Map<LearningStatusType, List<SongResponse>> findAllByUser(User user) {
+    return songRepository.findAllByUser(user).stream()
+        .collect(
+            Collectors.groupingBy(
+                song -> song.getStatus(),
+                Collectors.mapping(SongResponse::new, Collectors.toList())));
+  }
+
+  public SongResponse addSong(SongRequest requestDto, User user) {
+    Song song =
+        new Song(
+            user,
+            LearningStatusType.TO_LEARN,
+            requestDto.title(),
+            requestDto.artist(),
+            requestDto.difficulty());
+    return new SongResponse(songRepository.save(song));
+  }
 }
