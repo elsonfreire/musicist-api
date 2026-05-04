@@ -1,9 +1,9 @@
-package br.com.musicist.modules.kanban.model;
+package br.com.musicist.modules.repertoire.model;
 
 import java.time.LocalDateTime;
 
-import br.com.musicist.modules.kanban.enums.CardStatusType;
-import br.com.musicist.modules.kanban.enums.CardDifficultyType;
+import br.com.musicist.modules.repertoire.enums.DifficultyType;
+import br.com.musicist.modules.repertoire.enums.LearningStatusType;
 import br.com.musicist.modules.user.model.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,8 +27,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "music_cards")
-public class Card {
+@Table(name = "songs")
+public class Song {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +38,7 @@ public class Card {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private CardStatusType status;
+    private LearningStatusType status;
 
     @Column(nullable = false)
     private String title;
@@ -48,7 +48,7 @@ public class Card {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private CardDifficultyType difficulty;
+    private DifficultyType difficulty;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
