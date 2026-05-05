@@ -2,7 +2,7 @@ package br.com.musicist.modules.forum.dto;
 
 import java.time.LocalDateTime;
 
-import br.com.musicist.common.enums.ForumCategoryType;
+import br.com.musicist.modules.forum.enums.ForumCategoryType;
 import br.com.musicist.modules.forum.model.Topic;
 import br.com.musicist.modules.user.dto.UserSimplifiedResponse;
 
@@ -17,5 +17,4 @@ public record TopicResponse(
     public TopicResponse(Topic topic) {
         this(topic.getId(), topic.getTitle(),topic.getCategory(), topic.getDescription(), new UserSimplifiedResponse(topic.getUser()), topic.getCreatedAt());
     }
-
 }
