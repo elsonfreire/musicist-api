@@ -33,9 +33,6 @@ public class Goal {
   @Column(nullable = false)
   private GoalStatusType status;
 
-  @Column(nullable = false, updatable = false)
-  private LocalDate expiresAt;
-
   private LocalDateTime concludedAt;
 
   @Column(nullable = false, updatable = false)
@@ -49,7 +46,6 @@ public class Goal {
     this.createdAt = LocalDateTime.now();
     this.updatedAt = LocalDateTime.now();
     this.status = GoalStatusType.PENDING;
-    this.expiresAt = LocalDate.now().plusDays(7);
   }
 
   @PreUpdate

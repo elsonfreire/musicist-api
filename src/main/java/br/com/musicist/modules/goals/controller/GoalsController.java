@@ -33,7 +33,7 @@ public class GoalsController {
                 null
             );
 
-        return new String(response.text());
+        return response.text();
     }
     
 }
