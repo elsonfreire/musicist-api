@@ -29,11 +29,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class GoalController {
     @Autowired
     private GoalService goalService;
-    
-    @GetMapping("/generate")
-    public ResponseEntity<List<GoalResponse>> generateGoals(@AuthenticationPrincipal User currentUser) {
-       return ResponseEntity.ok(goalService.generateGoals(currentUser));
-    }
 
     @GetMapping
     public ResponseEntity<List<GoalResponse>> getAllMyPendingGoals(@AuthenticationPrincipal User currentUser) {
