@@ -6,18 +6,30 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
 
+import br.com.musicist.modules.goals.dto.GoalResponse;
+import br.com.musicist.modules.goals.service.GoalService;
+import br.com.musicist.modules.user.model.User;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
 @RestController
 @RequestMapping("/goals")
-public class GoalsController {
+public class GoalController {
+    @Autowired
+    private GoalService goalService;
+    
     @Value("${gemini.api-key}")
     private String geminiApiKey;
     
-    @GetMapping
-    public String getGoals() {
+    @GetMapping("/generate")
+    public String generateGoals() {
         Client client = new Client.Builder().apiKey(geminiApiKey).build();
 
         String responseLanguage = "PT-BR";
@@ -34,6 +46,11 @@ public class GoalsController {
             );
 
         return response.text();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<GoalResponse>> getAllMyGoals(@AuthenticationPrincipal User currentUser) {
+        return ResponseEntity.ok(goalService.findAllByUser(currentUser));
     }
     
 }
