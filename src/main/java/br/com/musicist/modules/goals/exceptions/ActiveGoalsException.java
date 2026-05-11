@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus;
 
 public class ActiveGoalsException extends ApiException {
   public ActiveGoalsException() {
-    super("You still have active pending goals", HttpStatus.CONFLICT);
+    super("User still has active pending goals", HttpStatus.CONFLICT);
   }
 }
