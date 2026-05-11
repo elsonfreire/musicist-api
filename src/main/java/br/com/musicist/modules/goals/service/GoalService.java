@@ -11,6 +11,10 @@ import br.com.musicist.modules.goals.dto.GoalResponse;
 import br.com.musicist.modules.goals.enums.GoalStatusType;
 import br.com.musicist.modules.goals.exceptions.ActiveGoalsException;
 import br.com.musicist.modules.goals.model.Goal;
+import br.com.musicist.modules.goals.dto.GoalUpdateRequest;
+import br.com.musicist.modules.goals.exceptions.GoalNotFoundException;
+import br.com.musicist.modules.goals.exceptions.InvalidGoalStatusTransition;
+import br.com.musicist.modules.goals.exceptions.GoalAlreadyResolvedException;
 import br.com.musicist.modules.goals.repository.GoalRepository;
 import br.com.musicist.modules.user.model.User;
 
@@ -29,6 +33,29 @@ public class GoalService {
             .collect(Collectors.toList());
     }
 
+    public GoalResponse update(Long id, GoalUpdateRequest goalUpdateRequest) {
+        Goal goal = goalRepository.findById(id)
+            .orElseThrow(() -> new GoalNotFoundException());
+
+        if (goalUpdateRequest.status() != null) 
+            updateGoalStatus(goal, goalUpdateRequest.status());
+
+        Goal newGoal = goalRepository.save(goal);
+
+        return new GoalResponse(newGoal);
+    }
+
+    private void updateGoalStatus(Goal goal, GoalStatusType newStatus) {
+        if (newStatus == GoalStatusType.PENDING || newStatus == goal.getStatus()) {
+            throw new InvalidGoalStatusTransition();
+        }
+        if (goal.getStatus() != GoalStatusType.PENDING) {
+            throw new GoalAlreadyResolvedException();
+        }
+        goal.setStatus(newStatus);
+
+    }
+    
     public List<GoalResponse> generateGoals(User user) {
         boolean hasActivePendingGoals = goalRepository
                 .existsByUserAndStatus(user, GoalStatusType.PENDING);
