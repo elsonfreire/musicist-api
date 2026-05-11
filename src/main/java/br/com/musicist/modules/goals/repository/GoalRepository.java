@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import br.com.musicist.modules.goals.model.Goal;
+
+import java.time.LocalDate;
 import java.util.List;
 import br.com.musicist.modules.user.model.User;
 
@@ -15,4 +17,6 @@ public interface GoalRepository extends JpaRepository<Goal, Long> {
         AND g.status = "PENDING"
     """)
     List<Goal> findAllPendingByUser(User user);
+
+    List<Goal> findByUserAndCreatedAtAfter(User user, LocalDate after);
 }
