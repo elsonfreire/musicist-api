@@ -15,8 +15,8 @@ public class GoalService {
     @Autowired
     private GoalRepository goalRepository;
     
-    public List<GoalResponse> findAllByUser(User user) {
-        return goalRepository.findAllByUser(user)
+    public List<GoalResponse> findAllPendingByUser(User user) {
+        return goalRepository.findAllPendingByUser(user)
             .stream()
             .map(goal -> new GoalResponse(goal))
             .collect(Collectors.toList());

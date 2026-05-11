@@ -49,8 +49,7 @@ public class GoalController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GoalResponse>> getAllMyGoals(@AuthenticationPrincipal User currentUser) {
-        return ResponseEntity.ok(goalService.findAllByUser(currentUser));
+    public ResponseEntity<List<GoalResponse>> getAllMyPendingGoals(@AuthenticationPrincipal User currentUser) {
+        return ResponseEntity.ok(goalService.findAllPendingByUser(currentUser));
     }
-    
 }
