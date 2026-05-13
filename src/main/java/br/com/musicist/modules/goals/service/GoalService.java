@@ -61,7 +61,7 @@ public class GoalService {
 
     }
     
-    public List<GoalResponse> generateGoals(User user) {
+    private List<GoalResponse> generateGoals(User user) {
         boolean hasActivePendingGoals = goalRepository
                 .existsByUserAndStatus(user, GoalStatusType.PENDING);
 
