@@ -1,6 +1,7 @@
 package br.com.musicist.modules.forum.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ import br.com.musicist.modules.user.model.User;
 public class TopicService {
   private final TopicRepository topicRepository;
 
-  public Topic findById(Long topicId) {
+  public Topic findById(UUID topicId) {
     return topicRepository
         .findById(topicId)
         .orElseThrow(() -> new RuntimeException("Topic does not exist"));
@@ -34,7 +35,7 @@ public class TopicService {
     return new TopicResponse(topicRepository.save(topic));
   }
 
-  public void delete(Long id, User currentUser) {
+  public void delete(UUID id, User currentUser) {
     Topic topic = topicRepository.findById(id).orElseThrow(TopicNotFoundException::new);
 
     if (!topic.getUser().getId().equals(currentUser.getId())) {

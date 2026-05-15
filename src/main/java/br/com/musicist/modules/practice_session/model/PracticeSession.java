@@ -3,6 +3,7 @@ package br.com.musicist.modules.practice_session.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import br.com.musicist.common.enums.InstrumentType;
 import br.com.musicist.modules.user.model.User;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Getter
@@ -19,8 +21,8 @@ import lombok.Setter;
 @Table(name = "practice_sessions")
 public class PracticeSession {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @UuidGenerator(style = UuidGenerator.Style.VERSION_7)
+  private UUID id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)

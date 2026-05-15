@@ -1,13 +1,12 @@
 package br.com.musicist.modules.forum.model;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import br.com.musicist.modules.user.model.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -17,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Getter
@@ -26,8 +26,8 @@ import lombok.Setter;
 @Table(name = "comments")
 public class Comment {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @UuidGenerator(style = UuidGenerator.Style.VERSION_7)
+  private UUID id;
 
   @Column(nullable = false)
   private String content;

@@ -2,6 +2,7 @@ package br.com.musicist.modules.repertoire.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import br.com.musicist.modules.repertoire.dto.SongRequest;
@@ -38,14 +39,14 @@ public class SongService {
     return new SongResponse(songRepository.save(song));
   }
 
-  public SongResponse updateSongStatus(Long id, LearningStatusType status, User user) {
+  public SongResponse updateSongStatus(UUID id, LearningStatusType status, User user) {
     Song song = songRepository.findByIdAndUser(id, user).orElseThrow(SongNotFoundException::new);
     song.setStatus((status));
 
     return new SongResponse(songRepository.save(song));
   }
 
-  public void delete(Long id, User user) {
+  public void delete(UUID id, User user) {
     Song song = songRepository.findByIdAndUser(id, user).orElseThrow(SongNotFoundException::new);
     songRepository.delete(song);
   }

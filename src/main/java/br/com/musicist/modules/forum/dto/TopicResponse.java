@@ -1,13 +1,14 @@
 package br.com.musicist.modules.forum.dto;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import br.com.musicist.modules.forum.enums.ForumCategoryType;
 import br.com.musicist.modules.forum.model.Topic;
 import br.com.musicist.modules.user.dto.UserSimplifiedResponse;
 
 public record TopicResponse(
-    Long id,
+    UUID id,
     String title,
     ForumCategoryType category,
     String description,

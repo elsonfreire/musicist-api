@@ -2,6 +2,7 @@ package br.com.musicist.modules.forum.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import br.com.musicist.modules.forum.enums.ForumCategoryType;
 import br.com.musicist.modules.user.model.User;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Getter
@@ -19,8 +21,8 @@ import lombok.Setter;
 @Table(name = "topics")
 public class Topic {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @UuidGenerator(style = UuidGenerator.Style.VERSION_7)
+  private UUID id;
 
   @Column(nullable = false)
   private String title;

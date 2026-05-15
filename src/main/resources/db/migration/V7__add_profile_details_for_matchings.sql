@@ -1,4 +1,3 @@
-
 CREATE TYPE music_genre_type AS ENUM (
     'ROCK', 'POP', 'METAL', 'JAZZ', 'CLASSICAL', 'BLUES', 
     'ELECTRONIC', 'HIP_HOP', 'RNB', 'COUNTRY', 'REGGAE', 
@@ -10,13 +9,17 @@ CREATE TYPE interest_type AS ENUM (
     'PRODUCE', 'MAKE_FRIENDS'
 );
 
-ALTER TABLE users ADD COLUMN city VARCHAR(100);
-ALTER TABLE users ADD COLUMN state VARCHAR(100);
-ALTER TABLE users ADD COLUMN favorite_genre music_genre_type;
+ALTER TABLE users
+    ADD COLUMN city VARCHAR(100);
+ALTER TABLE users
+    ADD COLUMN state VARCHAR(100);
+ALTER TABLE users
+    ADD COLUMN favorite_genre music_genre_type;
 
-CREATE TABLE user_interests (
-    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+CREATE TABLE user_interests
+(
+    user_id  UUID           NOT NULL REFERENCES users (id) ON DELETE CASCADE,
     interest interest_type NOT NULL,
-    
+
     CONSTRAINT pk_user_interests PRIMARY KEY (user_id, interest)
 );
