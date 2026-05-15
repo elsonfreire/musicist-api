@@ -26,9 +26,14 @@ public class GoalService {
     @Autowired
     private GeminiService geminiService;
     
-    public List<GoalResponse> findAllPendingByUser(User user) {
-        return goalRepository.findAllPendingByUser(user)
-            .stream()
+    public List<GoalResponse> findPendingByUserOrGenerate(User user) { 
+        List<Goal> pendingGoals = goalRepository.findAllPendingByUser(user, GoalStatusType.PENDING);
+        
+        if (pendingGoals.isEmpty()) {
+            return generateGoals(user);
+        }
+
+        return pendingGoals.stream()
             .map(goal -> new GoalResponse(goal))
             .collect(Collectors.toList());
     }
@@ -56,7 +61,7 @@ public class GoalService {
 
     }
     
-    public List<GoalResponse> generateGoals(User user) {
+    private List<GoalResponse> generateGoals(User user) {
         boolean hasActivePendingGoals = goalRepository
                 .existsByUserAndStatus(user, GoalStatusType.PENDING);
 
@@ -81,8 +86,7 @@ public class GoalService {
     }
 
     @Transactional
-    public void resetGoals(User user) {
-        goalRepository.deleteByUserAndStatus(user, GoalStatusType.PENDING);
-        this.generateAndSave(user);
+    public void expireAllPendingGoals() {
+        goalRepository.expirePendingGoals();
     }
 }
