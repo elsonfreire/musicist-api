@@ -4,4 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.musicist.modules.forum.model.Topic;
 
-public interface TopicRepository extends JpaRepository<Topic, Long> {}
+import java.util.UUID;
+
+public interface TopicRepository extends JpaRepository<Topic, UUID> {}

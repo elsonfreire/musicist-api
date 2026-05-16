@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import br.com.musicist.common.exceptions.ApiException;
 
 public class GoalAlreadyResolvedException extends ApiException {
-    public GoalAlreadyResolvedException() {
-        super("The goal is already resolved. Its status cannot be changed", HttpStatus.BAD_REQUEST);
-    }
+  public GoalAlreadyResolvedException() {
+    super("The goal is already resolved. Its status cannot be changed", HttpStatus.BAD_REQUEST);
+  }
 }

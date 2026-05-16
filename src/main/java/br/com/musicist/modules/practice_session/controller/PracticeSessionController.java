@@ -1,6 +1,7 @@
 package br.com.musicist.modules.practice_session.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class PracticeSessionController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(
-      @PathVariable("id") Long id, @AuthenticationPrincipal User currentUser) {
+          @PathVariable("id") UUID id, @AuthenticationPrincipal User currentUser) {
 
     practiceSessionService.deletePracticeSession(id, currentUser);
 
@@ -51,7 +52,7 @@ public class PracticeSessionController {
 
   @GetMapping("/{userId}")
   public ResponseEntity<List<PracticeSessionResponse>> getAllUserSessions(
-      @PathVariable("userId") Long userId) {
+      @PathVariable("userId") UUID userId) {
     return ResponseEntity.ok(practiceSessionService.getPracticeSessionsByUserId(userId));
   }
 }

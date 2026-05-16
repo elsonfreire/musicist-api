@@ -14,6 +14,7 @@ import br.com.musicist.modules.user.model.User;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
@@ -37,7 +38,7 @@ public class SongController {
 
   @PatchMapping("/{id}/status")
   public ResponseEntity<SongResponse> updateSongStatus(
-      @PathVariable Long id,
+      @PathVariable UUID id,
       @RequestBody @Valid UpdateStatusSongRequest dto,
       @AuthenticationPrincipal User currentUser) {
     return ResponseEntity.ok().body(songService.updateSongStatus(id, dto.status(), currentUser));
@@ -45,7 +46,7 @@ public class SongController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(
-      @PathVariable Long id, @AuthenticationPrincipal User currentUser) {
+      @PathVariable UUID id, @AuthenticationPrincipal User currentUser) {
     songService.delete(id, currentUser);
     return ResponseEntity.noContent().build();
   }

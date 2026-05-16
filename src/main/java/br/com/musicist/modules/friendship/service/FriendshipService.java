@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -24,7 +25,7 @@ public class FriendshipService {
 
   private final UserRepository userRepository;
 
-  public void sendRequest(Long requesterId, Long receiverId) {
+  public void sendRequest(UUID requesterId, UUID receiverId) {
     if (requesterId.equals(receiverId)) throw new IllegalArgumentException("Cannot add yourself");
 
     friendshipRepository
@@ -43,7 +44,7 @@ public class FriendshipService {
     friendshipRepository.save(friendship);
   }
 
-  public void acceptRequest(Long friendshipId, Long currentUserId) {
+  public void acceptRequest(UUID friendshipId, UUID currentUserId) {
     Friendship friendship = friendshipRepository.findById(friendshipId).orElseThrow();
 
     if (!friendship.getReceiver().getId().equals(currentUserId))
@@ -52,7 +53,7 @@ public class FriendshipService {
     friendship.setStatus(FriendshipStatusType.ACCEPTED);
   }
 
-  public void removeFriend(Long userId, Long friendId) {
+  public void removeFriend(UUID userId, UUID friendId) {
     Friendship friendship =
         friendshipRepository
             .findBetween(userId, friendId)
@@ -60,14 +61,14 @@ public class FriendshipService {
     friendshipRepository.delete(friendship);
   }
 
-  public List<UserResponse> getFriends(Long userId) {
+  public List<UserResponse> getFriends(UUID userId) {
     return friendshipRepository.findAcceptedFriendships(userId).stream()
         .map(f -> f.getRequester().getId().equals(userId) ? f.getReceiver() : f.getRequester())
         .map(UserResponse::new)
         .toList();
   }
 
-  public List<FriendshipResponse> getPendingRequests(Long userId) {
+  public List<FriendshipResponse> getPendingRequests(UUID userId) {
     return friendshipRepository
         .findByReceiverIdAndStatus(userId, FriendshipStatusType.PENDING)
         .stream()

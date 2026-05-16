@@ -6,8 +6,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -18,8 +20,8 @@ import java.time.LocalDateTime;
     uniqueConstraints = @UniqueConstraint(columnNames = {"requester_id", "receiver_id"}))
 public class Friendship {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  @UuidGenerator(style = UuidGenerator.Style.VERSION_7)
+  private UUID id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "requester_id", nullable = false)

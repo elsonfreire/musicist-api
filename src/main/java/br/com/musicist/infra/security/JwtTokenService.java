@@ -27,7 +27,7 @@ public class JwtTokenService implements TokenService {
             String token = JWT.create()
                 .withIssuer("musicist-api")
                 .withSubject(user.getEmail())
-                .withClaim("userId", user.getId())
+                .withClaim("userId", user.getId().toString())
                 .withExpiresAt(generateExpirationDate())
                 .sign(algorithm);
             return token;

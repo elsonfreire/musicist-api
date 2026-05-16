@@ -3,6 +3,7 @@ package br.com.musicist.modules.user.service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,12 +26,12 @@ public class UserService {
     return userRepository.findAll().stream().map(UserResponse::new).toList();
   }
 
-  public UserResponse findById(Long id) {
+  public UserResponse findById(UUID id) {
     User user = this.findUserEntityById(id);
     return new UserResponse(user);
   }
 
-  public UserResponse update(Long id, UserUpdateRequest userUpdated) {
+  public UserResponse update(UUID id, UserUpdateRequest userUpdated) {
     User user = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
 
     if (userUpdated.username() != null) {
@@ -60,12 +61,12 @@ public class UserService {
     }
   }
 
-  public UserStreakResponse getStreak(Long id) {
+  public UserStreakResponse getStreak(UUID id) {
     User user = findUserEntityById(id);
     return new UserStreakResponse(user.getCurrentStreak(), user.getLongestStreak());
   }
 
-  public void incrementStreak(Long id) {
+  public void incrementStreak(UUID id) {
     User user = this.findUserEntityById(id);
 
     if (user.getLastPracticeDate() != null) {
@@ -89,7 +90,7 @@ public class UserService {
     userRepository.save(user);
   }
 
-  public void resetStreak(Long id) {
+  public void resetStreak(UUID id) {
     User user = this.findUserEntityById(id);
 
     if (user.getLastPracticeDate() == null) {
@@ -105,7 +106,7 @@ public class UserService {
     }
   }
 
-  private User findUserEntityById(Long id) {
+  private User findUserEntityById(UUID id) {
     return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
   }
 }

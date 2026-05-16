@@ -5,9 +5,10 @@ import br.com.musicist.modules.friendship.model.Friendship;
 import br.com.musicist.modules.user.dto.UserResponse;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public record FriendshipResponse(
-    Long id,
+    UUID id,
     UserResponse requester,
     UserResponse receiver,
     FriendshipStatusType status,

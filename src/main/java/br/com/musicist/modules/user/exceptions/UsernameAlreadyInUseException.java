@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import br.com.musicist.common.exceptions.ApiException;
 
 public class UsernameAlreadyInUseException extends ApiException {
-    public UsernameAlreadyInUseException() {
-        super("Username already in use", HttpStatus.CONFLICT);
-    }
+  public UsernameAlreadyInUseException() {
+    super("Username already in use", HttpStatus.CONFLICT);
+  }
 }

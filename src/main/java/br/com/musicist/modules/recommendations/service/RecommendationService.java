@@ -3,6 +3,7 @@ package br.com.musicist.modules.recommendations.service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,9 +31,9 @@ public class RecommendationService {
             .findById(authenticatedUser.getId())
             .orElseThrow(() -> new RuntimeException("Usuário logado não encontrado no banco"));
 
-    List<Long> connectedIds = friendshipRepository.findConnectedUserIds(currentUser.getId());
+    List<UUID> connectedIds = friendshipRepository.findConnectedUserIds(currentUser.getId());
 
-    List<Long> idsToExclude = new ArrayList<>(connectedIds);
+    List<UUID> idsToExclude = new ArrayList<>(connectedIds);
     idsToExclude.add(currentUser.getId());
 
     return userRepository.findByIdNotIn(idsToExclude).stream()

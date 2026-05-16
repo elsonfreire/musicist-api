@@ -2,6 +2,7 @@ package br.com.musicist.modules.forum.controller;
 
 import br.com.musicist.modules.forum.service.CommentService;
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -45,19 +46,19 @@ public class TopicController {
 
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> delete(
-      @PathVariable("id") Long id, @AuthenticationPrincipal User currentUser) {
+      @PathVariable("id") UUID id, @AuthenticationPrincipal User currentUser) {
     topicService.delete(id, currentUser);
     return ResponseEntity.noContent().build();
   }
 
   @GetMapping("/{id}/comments")
-  public ResponseEntity<List<CommentResponse>> getTopicComments(@PathVariable("id") Long id) {
+  public ResponseEntity<List<CommentResponse>> getTopicComments(@PathVariable("id") UUID id) {
     return ResponseEntity.ok(commentService.findAllByTopicId(id));
   }
 
   @PostMapping("/{id}/comments")
   public ResponseEntity<CommentResponse> createTopicComment(
-      @PathVariable("id") Long id,
+      @PathVariable("id") UUID id,
       @RequestBody @Valid CommentRequest commentRequest,
       @AuthenticationPrincipal User currentUser) {
     return ResponseEntity.status(201).body(commentService.create(commentRequest, id, currentUser));

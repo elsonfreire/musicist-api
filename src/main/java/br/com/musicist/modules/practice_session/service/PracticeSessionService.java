@@ -1,6 +1,7 @@
 package br.com.musicist.modules.practice_session.service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class PracticeSessionService {
   private final PracticeSessionRepository practiceSessionRepository;
   private final UserService userService;
 
-  public List<PracticeSessionResponse> getPracticeSessionsByUserId(Long userId) {
+  public List<PracticeSessionResponse> getPracticeSessionsByUserId(UUID userId) {
     return practiceSessionRepository.findByUserId(userId).stream()
         .map(PracticeSessionResponse::new)
         .collect(Collectors.toList());
@@ -45,11 +46,9 @@ public class PracticeSessionService {
     return new PracticeSessionResponse(savedSession);
   }
 
-  public void deletePracticeSession(Long id, User currentUser) {
+  public void deletePracticeSession(UUID id, User currentUser) {
     PracticeSession practiceSession =
-        practiceSessionRepository
-            .findById(id)
-            .orElseThrow(PracticeSessionNotFoundException::new);
+        practiceSessionRepository.findById(id).orElseThrow(PracticeSessionNotFoundException::new);
 
     if (!practiceSession.getUser().getId().equals(currentUser.getId())) {
       throw new CannotDeleteFromOtherUserException();

@@ -1,6 +1,7 @@
 package br.com.musicist.modules.forum.service;
 
 import java.util.List;
+import java.util.UUID;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,13 @@ public class CommentService {
 
   private final TopicService topicService;
 
-  public List<CommentResponse> findAllByTopicId(Long topicId) {
+  public List<CommentResponse> findAllByTopicId(UUID topicId) {
     Topic topic = topicService.findById(topicId);
 
     return commentRepository.findAllByTopic(topic).stream().map(CommentResponse::new).toList();
   }
 
-  public CommentResponse create(CommentRequest commentRequest, Long topicId, User user) {
+  public CommentResponse create(CommentRequest commentRequest, UUID topicId, User user) {
     Topic topic = topicService.findById(topicId);
 
     Comment comment = new Comment(commentRequest.content(), user, topic);

@@ -2,12 +2,13 @@ package br.com.musicist.modules.practice_session.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import br.com.musicist.common.enums.InstrumentType;
 import br.com.musicist.modules.practice_session.model.PracticeSession;
 
 public record PracticeSessionResponse(
-    Long id,
+    UUID id,
     LocalDate date,
     InstrumentType instrument,
     Integer durationMinutes,

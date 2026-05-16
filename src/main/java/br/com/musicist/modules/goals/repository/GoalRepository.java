@@ -1,6 +1,7 @@
 package br.com.musicist.modules.goals.repository;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,7 +10,7 @@ import br.com.musicist.modules.goals.enums.GoalStatusType;
 import br.com.musicist.modules.goals.model.Goal;
 import br.com.musicist.modules.user.model.User;
 
-public interface GoalRepository extends JpaRepository<Goal, Long> {
+public interface GoalRepository extends JpaRepository<Goal, UUID> {
   @Query(
       """
       SELECT g FROM Goal g

@@ -1,11 +1,12 @@
-CREATE TABLE practice_sessions (
-    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    user_id INT NOT NULL,
-    date DATE NOT NULL,
-    instrument instrument_type DEFAULT 'other',
-    duration_minutes INT NOT NULL,
-    notes TEXT,
-    created_at TIMESTAMP NOT NULL,
+CREATE TABLE practice_sessions
+(
+    id               UUID      NOT NULL PRIMARY KEY,
+    user_id          UUID      NOT NULL,
+    date             DATE      NOT NULL,
+    instrument       instrument_type DEFAULT 'other',
+    duration_minutes INT       NOT NULL,
+    notes            TEXT,
+    created_at       TIMESTAMP NOT NULL,
 
-    CONSTRAINT fk_practice_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    CONSTRAINT fk_practice_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );

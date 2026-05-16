@@ -10,6 +10,7 @@ import br.com.musicist.modules.goals.service.GoalService;
 import br.com.musicist.modules.user.model.User;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,7 +33,7 @@ public class GoalController {
 
   @PutMapping("/{id}")
   public ResponseEntity<GoalResponse> updateGoal(
-      @PathVariable("id") Long id, @RequestBody GoalUpdateRequest goalUpdateRequest) {
+      @PathVariable("id") UUID id, @RequestBody GoalUpdateRequest goalUpdateRequest) {
     return ResponseEntity.ok(goalService.update(id, goalUpdateRequest));
   }
 }

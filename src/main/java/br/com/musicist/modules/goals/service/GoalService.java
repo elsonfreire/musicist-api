@@ -1,6 +1,7 @@
 package br.com.musicist.modules.goals.service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class GoalService {
     return pendingGoals.stream().map(GoalResponse::new).collect(Collectors.toList());
   }
 
-  public GoalResponse update(Long id, GoalUpdateRequest goalUpdateRequest) {
+  public GoalResponse update(UUID id, GoalUpdateRequest goalUpdateRequest) {
     Goal goal = goalRepository.findById(id).orElseThrow(GoalNotFoundException::new);
 
     if (goalUpdateRequest.status() != null) updateGoalStatus(goal, goalUpdateRequest.status());
